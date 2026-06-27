@@ -1,0 +1,15 @@
+//各ファイルは必ず登録済みの変数を最初に読み込みます
+//as *で読み込みファイル名を省略することができます
+@use "../global" as *;
+
+.header {
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    z-index: 1;
+    &__ttl {
+        color: #fff;
+    }
+}

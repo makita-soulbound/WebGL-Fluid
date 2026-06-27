@@ -1,0 +1,7 @@
+//globalフォルダ内のフォルダをひとつにまとめます
+//globalフォルダ内のファイルはその他の各ファイルで呼び出し可能な@forwardで読み込みます
+
+@forward "setting";
+@forward "keyframes";
+@forward "mixin";
+@forward "placeholder";
