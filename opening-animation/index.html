@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soulbound Symbol Opening</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="opening" aria-label="Soulbound オープニングアニメーション">
+    <canvas class="opening__canvas" aria-hidden="true"></canvas>
+    <div class="opening__vignette" aria-hidden="true"></div>
+    <div class="opening__grain" aria-hidden="true"></div>
+
+    <div class="symbol-stage">
+      <svg class="symbol-stage__art" viewBox="0 0 129.3 196.67" role="img" aria-label="Soulbound">
+        <defs>
+          <mask id="symbol-reveal-mask" maskUnits="userSpaceOnUse" x="-30" y="-30" width="190" height="260">
+            <rect x="-30" y="-30" width="190" height="260" fill="#000"/>
+            <path
+              class="symbol-stage__reveal-path"
+              pathLength="1"
+              d="M106 24 C 80 0 26 4 20 43 C 16 59 26 75 39 83 C 58 94 93 83 106 102 C 111 122 109 145 101 157 C 80 193 29 189 18 161 C 19 149 36 141 49 146"
+            />
+            <rect class="symbol-stage__final-reveal" x="-30" y="-30" width="190" height="260" fill="#fff"/>
+          </mask>
+
+        </defs>
+
+        <image
+          class="symbol-stage__logo"
+          href="images/soulbound_symbol_color.svg"
+          width="129.3"
+          height="196.67"
+          mask="url(#symbol-reveal-mask)"
+        />
+
+      </svg>
+    </div>
+
+    <button class="opening__skip" type="button">Skip animation</button>
+  </main>
+
+  <script src="fluid.js"></script>
+  <script src="opening.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+:root {
+  color-scheme: dark;
+  --trace-duration: 1.35s;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+body {
+  font-family: Arial, "Helvetica Neue", sans-serif;
+}
+
+.opening {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: #000;
+}
+
+.opening__canvas,
+.opening__vignette,
+.opening__grain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.opening__canvas {
+  z-index: 2;
+  opacity: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+
+.opening.is-tracing .opening__canvas {
+  opacity: 1;
+}
+
+.opening__vignette {
+  z-index: 3;
+  background: radial-gradient(circle at center, transparent 0 20%, rgba(0, 0, 0, .16) 52%, #000 88%);
+  pointer-events: none;
+}
+
+.opening__grain {
+  z-index: 4;
+  opacity: .045;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.symbol-stage {
+  position: relative;
+  z-index: 1;
+  width: min(38vh, 250px);
+  aspect-ratio: 129.3 / 196.67;
+}
+
+.symbol-stage__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.symbol-stage__logo {
+  opacity: 0;
+}
+
+.opening.is-tracing:not(.is-skipped) .symbol-stage__logo {
+  animation: symbol-fade-in var(--trace-duration) cubic-bezier(.16, 1, .3, 1) forwards;
+}
+
+.opening.is-complete .symbol-stage__logo,
+.opening.is-skipped .symbol-stage__logo {
+  opacity: 1;
+}
+
+.symbol-stage__reveal-path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 108;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+
+.symbol-stage__final-reveal {
+  opacity: 0;
+}
+
+.opening.is-complete .symbol-stage__final-reveal,
+.opening.is-skipped .symbol-stage__final-reveal {
+  opacity: 1;
+}
+
+.opening.is-tracing .symbol-stage__reveal-path {
+  animation: reveal-symbol var(--trace-duration) cubic-bezier(.42, 0, .3, 1) forwards;
+}
+
+.opening.is-skipped .symbol-stage__reveal-path {
+  animation: none;
+  stroke-dashoffset: 0;
+}
+
+.opening__skip {
+  position: absolute;
+  right: 4vw;
+  bottom: 4vh;
+  z-index: 5;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .28);
+  background: transparent;
+  color: rgba(255, 255, 255, .5);
+  font: inherit;
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .2s ease, color .2s ease;
+}
+
+.opening.is-tracing .opening__skip {
+  opacity: 1;
+}
+
+.opening.is-complete .opening__skip {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.opening__skip:hover,
+.opening__skip:focus-visible {
+  color: #fff;
+}
+
+@keyframes reveal-symbol {
+  from { stroke-dashoffset: 1; opacity: 1; }
+  to { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes symbol-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .symbol-stage {
+    width: min(48vw, 220px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening__canvas {
+    display: none;
+  }
+}
