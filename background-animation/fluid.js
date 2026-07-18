@@ -5,7 +5,7 @@
 
     const simulation = {
         resolutionShift: 1,
-        pigmentRetention: 0.955,
+        pigmentRetention: 0.97,
         motionRetention: 0.965,
         pressureRetention: 0.8,
         pressurePasses: 25,
@@ -235,26 +235,26 @@
                 );
 
                 vec2 whitePocketA = backgroundUv - vec2(
-                    0.75 + sin(time * 0.156) * 0.08,
-                    0.78 + cos(time * 0.204) * 0.05
+                    0.72 + sin(time * 0.156) * 0.06,
+                    0.82 + cos(time * 0.204) * 0.03
                 );
                 whitePocketA.x *= 1.45;
                 vec2 whitePocketB = backgroundUv - vec2(
-                    0.92 + cos(time * 0.12) * 0.05,
-                    0.43 + sin(time * 0.168) * 0.09
+                    0.94 + cos(time * 0.12) * 0.025,
+                    0.47 + sin(time * 0.168) * 0.04
                 );
                 whitePocketB.x *= 1.7;
                 vec2 whitePocketC = backgroundUv - vec2(
-                    0.68 + sin(time * 0.108) * 0.07,
-                    0.17 + cos(time * 0.144) * 0.04
+                    0.65 + sin(time * 0.108) * 0.05,
+                    0.10 + cos(time * 0.144) * 0.025
                 );
                 whitePocketC.x *= 1.25;
 
                 float whitePockets = max(
-                    1.0 - smoothstep(0.04, 0.22, length(whitePocketA)),
+                    1.0 - smoothstep(0.06, 0.33, length(whitePocketA)),
                     max(
-                        1.0 - smoothstep(0.03, 0.18, length(whitePocketB)),
-                        1.0 - smoothstep(0.04, 0.20, length(whitePocketC))
+                        1.0 - smoothstep(0.045, 0.27, length(whitePocketB)),
+                        1.0 - smoothstep(0.06, 0.30, length(whitePocketC))
                     )
                 );
                 backgroundColor = mix(
@@ -263,7 +263,40 @@
                     whitePockets * 0.78
                 );
 
-                vec3 pigment = texture2D(pigmentMap, uv).rgb;
+                vec2 pigmentBlurStep = pixelStep * 16.0;
+                vec3 pigment = texture2D(pigmentMap, uv).rgb * 0.3;
+                pigment += texture2D(
+                    pigmentMap,
+                    uv + vec2(pigmentBlurStep.x, 0.0)
+                ).rgb * 0.1;
+                pigment += texture2D(
+                    pigmentMap,
+                    uv - vec2(pigmentBlurStep.x, 0.0)
+                ).rgb * 0.1;
+                pigment += texture2D(
+                    pigmentMap,
+                    uv + vec2(0.0, pigmentBlurStep.y)
+                ).rgb * 0.1;
+                pigment += texture2D(
+                    pigmentMap,
+                    uv - vec2(0.0, pigmentBlurStep.y)
+                ).rgb * 0.1;
+                pigment += texture2D(
+                    pigmentMap,
+                    uv + pigmentBlurStep
+                ).rgb * 0.075;
+                pigment += texture2D(
+                    pigmentMap,
+                    uv - pigmentBlurStep
+                ).rgb * 0.075;
+                pigment += texture2D(
+                    pigmentMap,
+                    uv + vec2(pigmentBlurStep.x, -pigmentBlurStep.y)
+                ).rgb * 0.075;
+                pigment += texture2D(
+                    pigmentMap,
+                    uv + vec2(-pigmentBlurStep.x, pigmentBlurStep.y)
+                ).rgb * 0.075;
                 float peak = max(max(pigment.r, pigment.g), pigment.b);
                 float visibility = clamp(peak, 0.0, 1.0);
                 vec3 pigmentHue = clamp(pigment / max(peak, 0.001), 0.0, 1.0);
@@ -295,8 +328,7 @@
                     vec3(0.94, 0.99, 1.0),
                     finalWhite * 0.82
                 );
-                float opacity = smoothstep(0.1, 0.6, visibility);
-                opacity = opacity * opacity * 0.9;
+                float opacity = smoothstep(0.0015, 0.44, visibility) * 0.72;
                 vec3 glowLayer = glowColor * visibility * opacity;
                 vec3 compositedColor = vec3(1.0)
                     - (vec3(1.0) - backgroundColor) * (vec3(1.0) - glowLayer);
