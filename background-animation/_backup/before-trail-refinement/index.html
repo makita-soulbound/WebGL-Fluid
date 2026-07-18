@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WebGL Background Animation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="fluid-background" aria-hidden="true">
+    <canvas class="fluid-background__canvas"></canvas>
+    <div class="fluid-background__shade"></div>
+  </div>
+
+  <main class="page">
+    <section class="section section--hero">
+      <p class="section--hero__backdrop" aria-hidden="true">
+        TECHNOLOGY<br>FOR HUMAN<br>POTENTIAL
+      </p>
+      <div class="section--hero__copy">
+        <div class="section--hero__title-stack">
+          <h1 class="section__title section--hero__title-base" data-title-mask>
+            <span>未来の技術を、</span>
+            <span>社会で使える価値へ。</span>
+          </h1>
+          <span class="section__title section--hero__title-reaction" data-title-mask aria-hidden="true">
+            <span>未来の技術を、</span>
+            <span>社会で使える価値へ。</span>
+          </span>
+        </div>
+        <p class="section--hero__description">
+          AI・業務効率化・Web制作・Web3。<br>
+          SOULBOUNDは、技術と教育の力で、<br>
+          企業の変化と新しい挑戦を支援します。
+        </p>
+      </div>
+      <span class="section__scroll">Scroll</span>
+    </section>
+
+    <section class="section section--navy">
+      <p class="section__eyebrow">Section 01</p>
+      <h2 class="section__title">DEEP NAVY</h2>
+    </section>
+
+    <section class="section section--glass">
+      <p class="section__eyebrow">Section 02</p>
+      <h2 class="section__title">FROSTED GLASS</h2>
+    </section>
+
+    <section class="section section--navy">
+      <p class="section__eyebrow">Section 03</p>
+      <h2 class="section__title">HIDDEN LIGHT</h2>
+    </section>
+
+    <section class="section section--glass">
+      <p class="section__eyebrow">Section 04</p>
+      <h2 class="section__title">LIGHT RETURNS</h2>
+    </section>
+  </main>
+
+  <script src="fluid.js?v=interaction-1"></script>
+  <script src="hero.js?v=1"></script>
+</body>
+</html>
