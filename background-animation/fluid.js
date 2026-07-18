@@ -292,8 +292,8 @@
                     * smoothstep(0.34, 0.78, visibility);
                 glowColor = mix(
                     glowColor,
-                    vec3(1.0),
-                    finalWhite * 0.96
+                    vec3(0.94, 0.99, 1.0),
+                    finalWhite * 0.82
                 );
                 float opacity = smoothstep(0.1, 0.6, visibility);
                 opacity = opacity * opacity * 0.9;
@@ -890,8 +890,8 @@
             const movingColor = sampleBlueGradient(
                 (stroke.colorOffset + progress * 0.7) % 1
             );
-            const whitening = easeBetween(0.9, 0.99, progress);
-            const disappearingColor = [2.2, 2.2, 2.2];
+            const whitening = easeBetween(0.92, 0.995, progress);
+            const disappearingColor = [1.05, 1.08, 1.12];
             const color = movingColor.map((channel, index) => (
                 channel + (disappearingColor[index] - channel) * whitening
             ));
